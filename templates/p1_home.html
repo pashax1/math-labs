@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math Labs</title>
+
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+
+<body class="home-bg">
+
+<!-- Floating Math Symbols -->
+<div class="symbols">
+    <span>∑</span><span>π</span><span>√</span><span>∞</span>
+    <span>∫</span><span>θ</span><span>λ</span><span>Δ</span>
+    <span>≈</span><span>≠</span><span>β</span><span>α</span>
+</div>
+
+<div class="hero">
+    <h1 class="title">I.K.S BASED<br>MATH LAB</h1>
+    <p id="quote" class="quote"></p>
+    <a href="/systems" class="start-btn">Start Experiment</a>
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math Labs • Live Comparison</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="page-bg">
+
+<h1 class="page-title">Live System Comparison</h1>
+
+<div class="vs-header">
+    <span id="sys1"></span>
+    <span class="vs">VS</span>
+    <span id="sys2"></span>
+</div>
+
+<div class="split-container">
+
+    <div class="calc-panel left">
+        <h2 id="sys1Title"></h2>
+        <div id="steps1" class="steps-box"></div>
+    </div>
+
+    <div class="calc-panel right">
+        <h2 id="sys2Title"></h2>
+        <div id="steps2" class="steps-box"></div>
+    </div>
+
+</div>
+
+<div class="performance-box">
+    <h2>Live Performance</h2>
+    <div id="performanceText">Calculating...</div>
+</div>
+
+<div class="center">
+    <button class="start-btn" onclick="manualGoAbout()">See Result →</button>
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+<script>
+const s1 = localStorage.getItem("system1");
+const s2 = localStorage.getItem("system2");
+const op = localStorage.getItem("operation");
+const inputs = JSON.parse(localStorage.getItem("inputs"));
+
+document.getElementById("sys1").innerText = s1;
+document.getElementById("sys2").innerText = s2;
+document.getElementById("sys1Title").innerText = s1 + " Method";
+document.getElementById("sys2Title").innerText = s2 + " Method";
+
+// 🔥 CALL BACKEND CALCULATION
+fetch("/api/calculate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        system1: s1,
+        system2: s2,
+        operation: op,
+        inputs: inputs
+    })
+})
+.then(res => res.json())
+.then(data => {
+
+    // Save result for next pages
+    localStorage.setItem("calcResult", JSON.stringify(data));
+
+    // show live text
+    document.getElementById("performanceText").innerText =
+        `${data.faster} is ${data.percent}% faster`;
+
+    // auto move to page 6 after 3 sec
+    setTimeout(() => {
+        window.location.href = "/about";
+    }, 3000);
+});
+</script>
+
+
+
+
+</body>
+</html>

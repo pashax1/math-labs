@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Systems</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="page-bg">
+
+<h1 class="page-title">Select ANY TWO Systems</h1>
+
+<div class="systems-grid">
+
+    <div class="system-card vedic" onclick="selectSystem(this,'vedic')">Vedic</div>
+    <div class="system-card greek" onclick="selectSystem(this,'greek')">Greek</div>
+    <div class="system-card arabic" onclick="selectSystem(this,'arabic')">Arabic</div>
+    <div class="system-card chinese" onclick="selectSystem(this,'chinese')">Chinese</div>
+    <div class="system-card babylonian" onclick="selectSystem(this,'babylonian')">Babylonian</div>
+    <div class="system-card egyptian" onclick="selectSystem(this,'egyptian')">Egyptian</div>
+    <div class="system-card roman" onclick="selectSystem(this,'roman')">Roman</div>
+    <div class="system-card modern" onclick="selectSystem(this,'modern')">Modern Math</div>
+    <div class="system-card numpy" onclick="selectSystem(this,'numpy')">Python NumPy</div>
+    <div class="system-card stats" onclick="selectSystem(this,'stats')">Statistics Engine</div>
+
+</div>
+
+
+<button id="compareBtn" class="compare-btn" disabled onclick="goNext()">Compare Systems</button>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

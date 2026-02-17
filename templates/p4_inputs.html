@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math Labs • Provide Inputs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="page-bg">
+
+<div class="center-wrapper">
+
+    <div class="glass-card input-card">
+
+        <h1 class="page-title">Provide Inputs</h1>
+        <h3 id="systemsTitle" class="vsText"></h3>
+
+        <div class="operation-box">
+            <h2 id="operationTitle"></h2>
+            <p id="operationInfo"></p>
+        </div>
+
+        <div id="inputContainer" class="inputs-area"></div>
+
+        <button class="start-btn" onclick="startCalculation()">
+            Start Calculation →
+        </button>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+<script>
+const s1 = localStorage.getItem("system1");
+const s2 = localStorage.getItem("system2");
+document.getElementById("systemsTitle").innerText = s1 + " VS " + s2;
+</script>
+
+</body>
+</html>

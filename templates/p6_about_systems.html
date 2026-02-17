@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math Labs • About Systems</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="page-bg">
+
+<h1 class="page-title">Understanding The Systems</h1>
+
+<div class="vs-header">
+    <span id="sys1"></span>
+    <span class="vs">VS</span>
+    <span id="sys2"></span>
+</div>
+
+<div class="split-container">
+
+    <div class="calc-panel left">
+        <h2 id="title1"></h2>
+        <div id="about1" class="steps-box"></div>
+    </div>
+
+    <div class="calc-panel right">
+        <h2 id="title2"></h2>
+        <div id="about2" class="steps-box"></div>
+    </div>
+
+</div>
+
+<div class="center">
+    <button class="start-btn" onclick="goResult()">See Winner →</button>
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+<script>
+let s1 = localStorage.getItem("system1");
+let s2 = localStorage.getItem("system2");
+
+/* 🔥 convert display names → engine keys */
+function normalize(name){
+    name = name.toLowerCase();
+
+    if(name.includes("vedic")) return "vedic";
+    if(name.includes("greek")) return "greek";
+    if(name.includes("roman")) return "roman";
+    if(name.includes("arabic")) return "arabic";
+    if(name.includes("babylonian")) return "babylonian";
+    if(name.includes("egyptian")) return "egyptian";
+    if(name.includes("chinese")) return "chinese";
+    if(name.includes("modern")) return "modern";
+
+    return name;
+}
+
+const key1 = normalize(s1);
+const key2 = normalize(s2);
+
+document.getElementById("sys1").innerText = s1;
+document.getElementById("sys2").innerText = s2;
+
+document.getElementById("title1").innerText = s1 + " System";
+document.getElementById("title2").innerText = s2 + " System";
+
+/* 🔥 THIS was failing before */
+loadSystemInfo(key1, key2);
+
+function goResult(){
+    window.location.href="/result";
+}
+</script>
+
+
+<button onclick="goResult()">See Final Result →</button>
+
+</body>
+</html>

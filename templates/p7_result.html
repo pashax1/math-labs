@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math Labs • Final Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="page-bg">
+
+<h1 class="page-title">🏆 Final Winner</h1>
+
+<div class="result-box center">
+    <h2 id="winnerText"></h2>
+    <p id="speedText"></p>
+    <p id="timeText"></p>
+</div>
+
+<div class="center">
+    <button class="start-btn" onclick="restart()">Start New Comparison</button>
+</div>
+
+<script>
+const winner  = localStorage.getItem("winner");
+const percent = localStorage.getItem("percent");
+const time1   = localStorage.getItem("time1");
+const time2   = localStorage.getItem("time2");
+const s1      = localStorage.getItem("system1");
+const s2      = localStorage.getItem("system2");
+
+if(!winner){
+    document.getElementById("winnerText").innerText =
+        "No result found. Run calculation first.";
+}else{
+    document.getElementById("winnerText").innerText =
+        winner.toUpperCase() + " SYSTEM WINS 🏆";
+
+    document.getElementById("speedText").innerText =
+        "Faster by " + percent + "%";
+
+    document.getElementById("timeText").innerText =
+        `${s1}: ${time1}s   |   ${s2}: ${time2}s`;
+}
+
+function restart(){
+    localStorage.clear();
+    window.location.href="/";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Operation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="page-bg">
+
+<h1 class="page-title">Choose Operation</h1>
+
+<div class="operations-grid">
+
+    <div class="op-card add" onclick="selectOperation('add')">＋ Addition</div>
+    <div class="op-card sub" onclick="selectOperation('sub')">－ Subtraction</div>
+    <div class="op-card mul" onclick="selectOperation('mul')">× Multiplication</div>
+    <div class="op-card div" onclick="selectOperation('div')">÷ Division</div>
+    <div class="op-card sqrt" onclick="selectOperation('sqrt')">√ Square Root</div>
+    <div class="op-card power" onclick="selectOperation('power')">x² Power</div>
+
+    <div class="op-card poly" onclick="selectOperation('poly')">∑ Polynomial</div>
+    <div class="op-card equation" onclick="selectOperation('equation')">＝ Equation</div>
+    <div class="op-card factor" onclick="selectOperation('factor')">ƒ Factorization</div>
+
+    <div class="op-card matrix" onclick="selectOperation('matrix')">▣ Matrix Multiply</div>
+    <div class="op-card det" onclick="selectOperation('det')">∥ Determinant</div>
+    <div class="op-card stats" onclick="selectOperation('stats')">📊 Statistics</div>
+
+    <div class="op-card prime" onclick="selectOperation('prime')"># Prime Check</div>
+    <div class="op-card sort" onclick="selectOperation('sort')">⇅ Sorting</div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
