@@ -3,6 +3,11 @@
 <head>
     <title>Math Labs • Live Comparison</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        #nextBtn {
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="page-bg">
@@ -32,10 +37,6 @@
 <div class="performance-box">
     <h2>Live Performance</h2>
     <div id="performanceText">Calculating...</div>
-</div>
-
-<div class="center">
-    <button class="start-btn" onclick="manualGoAbout()">See Result →</button>
 </div>
 
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
@@ -79,7 +80,26 @@ fetch("/api/calculate", {
 });
 </script>
 
+<div class="center">
+    <button class="start-btn" onclick="GoAbout()">See Result →</button>
+    
+</div>
+<script>
+function GoAbout(){
+    window.location.href="/result";
+}
+</script>
 
+<div class="center"> 
+<button  class="start-btn"  onclick="goAbout()">
+    Learn About Systems →
+   </button>
+</div>
+ <script>
+function goAbout(){
+    window.location.href="/about";
+}
+</script>
 
 
 </body>

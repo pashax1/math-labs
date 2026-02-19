@@ -1,85 +1,44 @@
-import math
+# VEDIC MATH ENGINE
+# Returns: result , steps list
 
-# Vedic math = smart shortcuts & mental math
-
-
-# ---------- ADDITION ----------
 def add(inputs):
-    a = float(inputs["a"])
-    b = float(inputs["b"])
+    a = inputs.get("a", "0")
+    b = inputs.get("b", "0")
+
+    # convert to string for digit-wise addition
+    a_str = str(a)
+    b_str = str(b)
 
     steps = []
-    steps.append("Using mental left-to-right addition")
-    steps.append(f"{a} + {b}")
+    steps.append(f"Vedic Addition using 'Right to Left' method")
+    steps.append(f"Numbers: {a_str} + {b_str}")
 
-    result = a + b
-    steps.append(f"Instant result = {result}")
+    # make same length
+    max_len = max(len(a_str), len(b_str))
+    a_str = a_str.zfill(max_len)
+    b_str = b_str.zfill(max_len)
 
-    return result, steps
+    carry = 0
+    result_digits = []
 
+    # right → left addition (like mental math)
+    for i in range(max_len - 1, -1, -1):
+        d1 = int(a_str[i])
+        d2 = int(b_str[i])
 
-# ---------- SUBTRACTION ----------
-def sub(inputs):
-    a = float(inputs["a"])
-    b = float(inputs["b"])
+        total = d1 + d2 + carry
+        digit = total % 10
+        carry = total // 10
 
-    steps = []
-    steps.append("Using Vedic complement method")
-    result = a - b
-    steps.append(f"Answer = {result}")
+        steps.append(f"{d1} + {d2} + carry → {total}  (write {digit}, carry {carry})")
+        result_digits.insert(0, str(digit))
 
-    return result, steps
+    # final carry
+    if carry > 0:
+        result_digits.insert(0, str(carry))
+        steps.append(f"Final carry added → {carry}")
 
-
-# ---------- MULTIPLICATION ----------
-def mul(inputs):
-    a = float(inputs["a"])
-    b = float(inputs["b"])
-
-    steps = []
-    steps.append("Using Vedic Urdhva-Tiryagbhyam method")
-    steps.append("Vertical & Crosswise multiplication")
-
-    result = a * b
-    steps.append(f"Answer = {result}")
-
-    return result, steps
-
-
-# ---------- DIVISION ----------
-def div(inputs):
-    a = float(inputs["a"])
-    b = float(inputs["b"])
-
-    steps = []
-    steps.append("Using Vedic Straight Division")
-    result = a / b
-    steps.append(f"Answer = {result}")
-
-    return result, steps
-
-
-# ---------- POWER ----------
-def power(inputs):
-    a = float(inputs["a"])
-    b = float(inputs["b"])
-
-    steps = []
-    steps.append("Using rapid mental exponentiation")
-    result = a ** b
-    steps.append(f"Answer = {result}")
-
-    return result, steps
-
-
-# ---------- SQUARE ROOT ----------
-def sqrt(inputs):
-    a = float(inputs["a"])
-
-    steps = []
-    steps.append("Using Vedic duplex method")
-
-    result = math.sqrt(a)
-    steps.append(f"Answer = {result}")
+    result = int("".join(result_digits))
+    steps.append(f"Final Answer = {result}")
 
     return result, steps

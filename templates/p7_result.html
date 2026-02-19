@@ -19,33 +19,32 @@
     <button class="start-btn" onclick="restart()">Start New Comparison</button>
 </div>
 
-<script>
-const winner  = localStorage.getItem("winner");
-const percent = localStorage.getItem("percent");
-const time1   = localStorage.getItem("time1");
-const time2   = localStorage.getItem("time2");
-const s1      = localStorage.getItem("system1");
-const s2      = localStorage.getItem("system2");
-
-if(!winner){
-    document.getElementById("winnerText").innerText =
-        "No result found. Run calculation first.";
-}else{
-    document.getElementById("winnerText").innerText =
-        winner.toUpperCase() + " SYSTEM WINS 🏆";
-
-    document.getElementById("speedText").innerText =
-        "Faster by " + percent + "%";
-
-    document.getElementById("timeText").innerText =
-        `${s1}: ${time1}s   |   ${s2}: ${time2}s`;
-}
-
+<script> 
 function restart(){
-    localStorage.clear();
     window.location.href="/";
 }
 </script>
+
+<script>
+const data = JSON.parse(localStorage.getItem("finalResult"));
+
+if(!data){
+    document.getElementById("winner").innerText = "No result found.";
+}else{
+    document.getElementById("winner").innerText =
+        data.faster.toUpperCase() + " wins!";
+
+    document.getElementById("speed").innerText =
+        "Faster by " + data.percent + "%";
+
+    document.getElementById("time1").innerText =
+        "System 1 time: " + data.time1 + " sec";
+
+    document.getElementById("time2").innerText =
+        "System 2 time: " + data.time2 + " sec";
+}
+</script>
+
 
 </body>
 </html>

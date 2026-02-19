@@ -2,10 +2,24 @@ from flask import Flask, render_template, request, jsonify
 import time
 import importlib
 from calculations.benchmark_engine import compare_systems
+from engine.calculator import calculate
 
 app = Flask(__name__)
 
 # ================= PAGE ROUTES =================
+
+@app.route("/calculate", methods=["POST"])
+def run_calculation():
+
+    operation = request.form.get("operation")
+    a = request.form.get("a")
+    b = request.form.get("b")
+    extra = request.form.get("list")
+
+    result = calculate(operation, a, b, extra)
+
+    return render_template("result.html", result=result)
+
 
 @app.route("/")
 def home():

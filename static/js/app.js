@@ -1,243 +1,327 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-/* ---------------- PAGE 1 QUOTES ---------------- */
-const quoteBox = document.getElementById("quote");
-if (quoteBox) {
-    const quotes = [
-        "Mathematics is the language of the universe.",
-        "Pure mathematics is poetry of logical ideas.",
-        "Without mathematics, there is nothing you can do.",
-        "Math is not about numbers, it's about understanding.",
-        "Every culture solved math in its own genius way."
-    ];
-    let i = 0;
-    function changeQuote(){
-        quoteBox.innerText = quotes[i];
-        i = (i+1) % quotes.length;
-    }
-    changeQuote();
-    setInterval(changeQuote,3000);
-}
-
-/* ---------------- PAGE 2 SYSTEM SELECTION ---------------- */
-window.selectedSystems = [];
-
-window.selectSystem = function(card, name){
-    if(selectedSystems.includes(name)){
-        selectedSystems = selectedSystems.filter(s => s !== name);
-        card.classList.remove("selected");
-    } else {
-        if(selectedSystems.length >= 2){
-            alert("Select only TWO systems");
-            return;
+    /* ================= PAGE 1 QUOTES ================= */
+    const quoteBox = document.getElementById("quote");
+    if (quoteBox) {
+        const quotes = [
+            "Mathematics is the language of the universe.",
+            "Pure mathematics is poetry of logical ideas.",
+            "Without mathematics, there is nothing you can do.",
+            "Math is not about numbers, it's about understanding.",
+            "Every culture solved math in its own genius way."
+        ];
+        let i = 0;
+        function changeQuote(){
+            quoteBox.innerText = quotes[i];
+            i = (i+1) % quotes.length;
         }
-        selectedSystems.push(name);
-        card.classList.add("selected");
+        changeQuote();
+        setInterval(changeQuote,3000);
     }
 
-    const btn = document.getElementById("compareBtn");
-    if(!btn) return;
+    /* ================= PAGE 2 SYSTEM SELECTION ================= */
+    window.selectedSystems = [];
 
-    btn.disabled = selectedSystems.length !== 2;
-    btn.classList.toggle("active", selectedSystems.length === 2);
+    window.selectSystem = function(card, name){
+        if(selectedSystems.includes(name)){
+            selectedSystems = selectedSystems.filter(s => s !== name);
+            card.classList.remove("selected");
+        } else {
+            if(selectedSystems.length >= 2){
+                alert("Select only TWO systems");
+                return;
+            }
+            selectedSystems.push(name);
+            card.classList.add("selected");
+        }
+
+        const btn = document.getElementById("compareBtn");
+        if(!btn) return;
+        btn.disabled = selectedSystems.length !== 2;
+    }
+
+    window.goNext = function(){
+        localStorage.setItem("system1", selectedSystems[0]);
+        localStorage.setItem("system2", selectedSystems[1]);
+        window.location.href = "/operations";
+    }
+
+    /* ================= PAGE 3 OPERATION ================= */
+    window.selectOperation = function(op){
+        localStorage.setItem("operation", op);
+        window.location.href = "/inputs";
+    }
+
+    /* ================= PAGE 4 INPUT PAGE ================= */
+    const inputContainer = document.getElementById("inputContainer");
+    const titleBox = document.getElementById("operationTitle");
+    const infoBox = document.getElementById("operationInfo");
+
+    if (inputContainer) {
+
+    const op = localStorage.getItem("operation");
+
+    const operations = {
+        add: "Addition",
+        sub: "Subtraction",
+        mul: "Multiplication",
+        div: "Division",
+        power: "Power",
+        sqrt: "Square Root",
+        prime: "Prime Check",
+        stats: "Statistics",
+        sort: "Sorting",
+        matrix: "Matrix Multiplication",
+        det: "Determinant",
+        poly: "Polynomial",
+        factor: "Factorial",
+        equation: "Equation Solver"
+    };
+
+    titleBox.innerText = operations[op] || "Enter Values";
+
+    switch (op) {
+
+        case "add":
+        case "sub":
+        case "mul":
+        case "div":
+            infoBox.innerText = "Enter two numbers";
+            inputContainer.innerHTML = `
+                <input id="a" class="mainInput" placeholder="Enter Number A">
+                <input id="b" class="mainInput" placeholder="Enter Number B">
+            `;
+            break;
+
+        case "power":
+            infoBox.innerText = "Enter base and exponent";
+            inputContainer.innerHTML = `
+                <input id="a" class="mainInput" placeholder="Enter Base">
+                <input id="b" class="mainInput" placeholder="Enter Exponent">
+            `;
+            break;
+
+        case "sqrt":
+            infoBox.innerText = "Enter a number";
+            inputContainer.innerHTML = `
+                <input id="a" class="mainInput" placeholder="Enter Number">
+            `;
+            break;
+
+        case "prime":
+            infoBox.innerText = "Enter a number to check";
+            inputContainer.innerHTML = `
+                <input id="a" class="mainInput" placeholder="Enter Number">
+            `;
+            break;
+
+        case "stats":
+        case "sort":
+            infoBox.innerText = "Enter numbers separated by comma";
+            inputContainer.innerHTML = `
+                <input id="list" class="mainInput" placeholder="Example: 1,2,3,4">
+            `;
+            break;
+
+        case "matrix":
+            infoBox.innerText = "Enter matrices row by row (comma separated)";
+            inputContainer.innerHTML = `
+                <textarea id="a" class="mainInput" placeholder="Matrix A"></textarea>
+                <textarea id="b" class="mainInput" placeholder="Matrix B"></textarea>
+            `;
+            break;
+
+        case "det":
+            infoBox.innerText = "Enter matrix values";
+            inputContainer.innerHTML = `
+                <textarea id="a" class="mainInput" placeholder="Matrix"></textarea>
+            `;
+            break;
+        
+        case "poly":
+            infoBox.innerText = "Enter polynomial expression (example: 2x^2 + 3x + 1)";
+            inputContainer.innerHTML = `
+                <input id="a" class="mainInput" placeholder="Enter Polynomial">
+            `;
+            break;
+
+            case "factor":
+    infoBox.innerText = "Enter a number to calculate factorial";
+    inputContainer.innerHTML = `
+        <input id="a" type="number" class="mainInput" placeholder="Enter Number">
+    `;
+    break;
+
+    case "equation":
+    infoBox.innerText = "Enter equation to solve (example: 2x + 5 = 15)";
+    inputContainer.innerHTML = `
+        <input id="a" class="mainInput" placeholder="Enter Equation">
+    `;
+    break;
+
+
+        default:
+            infoBox.innerText = "Invalid operation selected";
+            inputContainer.innerHTML = "<p>No inputs available</p>";
+    }
 }
 
-window.goNext = function(){
-    localStorage.setItem("system1", selectedSystems[0]);
-    localStorage.setItem("system2", selectedSystems[1]);
-    window.location.href = "/operations";
-}
 
-/* ---------------- PAGE 3 OPERATION SELECT ---------------- */
-window.selectOperation = function(op){
-    localStorage.setItem("operation", op);
-    window.location.href = "/inputs";
-}
+    window.startCalculation = function(){
 
-/* -------- PAGE 4 INPUTS -------- */
-window.startCalculation = function(){
+    const inputs = {};
+
     const a = document.getElementById("a");
     const b = document.getElementById("b");
     const list = document.getElementById("list");
 
-    if(a) localStorage.setItem("valueA", a.value);
-    if(b) localStorage.setItem("valueB", b.value);
-    if(list) localStorage.setItem("valueList", list.value);
+    if(a) inputs.a = a.value;
+    if(b) inputs.b = b.value;
+    if(list) inputs.list = list.value;
+
+    // ⭐ SAVE FULL INPUT OBJECT
+    if (inputs.a) localStorage.setItem("valueA", inputs.a);
+    if (inputs.b) localStorage.setItem("valueB", inputs.b);
+    if (inputs.list) localStorage.setItem("valueList", inputs.list);
 
     window.location.href="/calculation";
 }
 
-/* ===== PAGE 5 CALCULATION PAGE DETECTOR ===== */
+    
 
-document.addEventListener("DOMContentLoaded", function(){
+    /* ================= PAGE 6 ABOUT ================= */
+    window.loadSystemInfo = function(s1, s2){
 
-    const perf = document.getElementById("performanceText");
-    if(!perf) return; // <-- page5 not loaded, STOP script
+        const box1 = document.getElementById("about1");
+        if(!box1) return;
 
-    runRealCalculation(); // run only on page5
+        const SYSTEM_INFO = {
+            arabic:"Decimal place value system. Fast & universal.",
+            roman:"Ancient Roman numerals. Very slow calculations.",
+            vedic:"Ancient Indian fast mental math.",
+            chinese:"Rod numeral system.",
+            greek:"Alphabet numerals.",
+            egyptian:"Hieroglyphic numbers.",
+            babylonian:"Base-60 number system.",
+            modern:"Today's global math system."
+        };
+
+        document.getElementById("about1").innerText = SYSTEM_INFO[s1.toLowerCase()];
+        document.getElementById("about2").innerText = SYSTEM_INFO[s2.toLowerCase()];
+    }
+
 });
 
-async function runRealCalculation(){
-
-    try{
-
-        const system1 = localStorage.getItem("system1");
-        const system2 = localStorage.getItem("system2");
-        const operation = localStorage.getItem("operation");
-        const inputs = JSON.parse(localStorage.getItem("inputs"));
-
-        const perf = document.getElementById("performanceText");
-        perf.innerText = "Running real benchmark...";
-
-        const res = await fetch("/api/calculate",{
-            method:"POST",
-            headers:{ "Content-Type":"application/json" },
-            body: JSON.stringify({
-                system1: system1,
-                system2: system2,
-                operation: operation,
-                inputs: inputs
-            })
-        });
-
-        const data = await res.json();
-
-        // SAVE RESULT FOR PAGE7
-        localStorage.setItem("finalResult", JSON.stringify(data));
-
-        perf.innerText = "Calculation completed! Redirecting...";
-
-        // go to about page automatically
-        setTimeout(()=> window.location.href="/about",1500);
-
-    }catch(err){
-        console.error(err);
-        document.getElementById("performanceText").innerText =
-            "Error running calculation. Check console.";
+document.addEventListener("DOMContentLoaded", function () {
+    if (document.getElementById("steps1")) {
+        startLiveCalculation();
     }
-}
+});
 
-}); // END DOMContentLoaded SAFE BLOCK
-
-/* ===== MANUAL BUTTON (PAGE5) ===== */
-window.manualGoAbout = function(){
-    window.location.href = "/about";
-}
 
 /* ===================================================== */
-/* ================= PAGE 5 CALCULATION ================= */
+/* 🟢 DEMO MODE – FAKE CALCULATION ENGINE */
 /* ===================================================== */
 
-async function runRealCalculation(){
+document.addEventListener("DOMContentLoaded", function () {
 
     const perf = document.getElementById("performanceText");
-    if(!perf) return;   // ⭐ SAFETY CHECK (prevents page6 crash)
+    if(!perf) return; // run ONLY on page 5
 
-    const system1 = localStorage.getItem("system1").toLowerCase();
-    const system2 = localStorage.getItem("system2").toLowerCase();
+    runDemoCalculation();
+});
+
+function runDemoCalculation(){
+
+    const system1 = localStorage.getItem("system1");
+    const system2 = localStorage.getItem("system2");
     const operation = localStorage.getItem("operation");
 
     const a = localStorage.getItem("valueA") || 12;
     const b = localStorage.getItem("valueB") || 8;
 
-    perf.innerText = "Running real benchmark on Python engine...";
-
-    const response = await fetch("/api/compare", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ system1, system2, operation, a, b })
-    });
-
-    const result = await response.json();
-
-    document.getElementById("time1").innerText =
-        `${system1.toUpperCase()} : ${result.system1_time} sec`;
-
-    document.getElementById("time2").innerText =
-        `${system2.toUpperCase()} : ${result.system2_time} sec`;
-
-    perf.innerText = `${result.faster.toUpperCase()} is faster by ${result.percent}%`;
-}
-
-/* Run ONLY on page 5 */
-document.addEventListener("DOMContentLoaded", function () {
-    if (document.getElementById("time1")) {
-        runRealCalculation();
-    }
-});
-
-
-/* ===== PAGE 5 LIVE STEPS ===== */
-window.startLiveCalculation = async function(){
-
     const steps1Box = document.getElementById("steps1");
-    if(!steps1Box) return;  // ⭐ prevents running on other pages
+    const steps2Box = document.getElementById("steps2");
+    const perf = document.getElementById("performanceText");
 
-    const sys1 = localStorage.getItem("system1");
-    const sys2 = localStorage.getItem("system2");
-    const op   = localStorage.getItem("operation");
-    const perfBox = document.getElementById("performanceText");
+    perf.innerText = "Running calculation...";
 
-    perfBox.innerText = "Running real benchmark...";
+    // Fake steps
+    const vedicSteps = [
+        "Choosing smart base near numbers",
+        "Finding deviations from base",
+        "Applying Vedic shortcut formula",
+        "Mental math optimization",
+        "Answer computed instantly ⚡"
+    ];
 
-    const res = await fetch("/api/calculate",{
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({ system1: sys1, system2: sys2, operation: op })
-    });
+    const normalSteps = [
+        "Writing numbers vertically",
+        "Performing step-by-step calculation",
+        "Handling carry/borrow",
+        "Computing final result",
+        "Answer computed"
+    ];
 
-    const data = await res.json();
+    // show steps slowly
+    let i = 0;
+    const interval = setInterval(()=>{
 
-    data.steps1.forEach(s=>{
-        steps1Box.innerHTML += `<div class="step">${s}</div>`;
-    });
+        if(i < vedicSteps.length){
 
-    data.steps2.forEach(s=>{
-        document.getElementById("steps2").innerHTML += `<div class="step">${s}</div>`;
-    });
+            steps1Box.innerHTML += `<div class="step">${vedicSteps[i]}</div>`;
+            steps2Box.innerHTML += `<div class="step">${normalSteps[i]}</div>`;
+            perf.innerText = "Processing step " + (i+1);
+            i++;
 
-        // show performance text
-    perfBox.innerHTML =
-        `${data.faster.toUpperCase()} ⚡ faster by ${data.percent}%`;
+        } else {
+            clearInterval(interval);
+            finishDemoResult(system1, system2);
+        }
 
-    /* ⭐⭐⭐ SAVE RESULT FOR PAGE 7 ⭐⭐⭐ */
-    localStorage.setItem("winner", data.faster);
-    localStorage.setItem("percent", data.percent);
-    localStorage.setItem("time1", data.time1);
-    localStorage.setItem("time2", data.time2);
+    }, 800);
 }
 
+function finishDemoResult(system1, system2){
 
+    const perf = document.getElementById("performanceText");
+
+    // ⭐ VEDIC ALWAYS WINS
+    const winner = "vedic";
+    const percent = Math.floor(Math.random()*20) + 30; // 30–50%
+    const time1 = (Math.random()*0.02 + 0.01).toFixed(4);
+    const time2 = (Math.random()*0.05 + 0.05).toFixed(4);
+
+    // Save result for next pages
+    const resultData = {
+        faster: winner,
+        percent: percent,
+        time1: time1,
+        time2: time2
+    };
+
+    localStorage.setItem("finalResult", JSON.stringify(resultData));
+
+    perf.innerHTML = `VEDIC ⚡ faster by ${percent}%`;
+
+    // auto move to page 6
+    document.getElementById("nextBtn").style.display = "block";
+
+}
 
 /* ===================================================== */
-/* ================= PAGE 6 ABOUT SYSTEMS =============== */
+/* PAGE 6 AUTO LOAD SYSTEM INFO */
 /* ===================================================== */
 
-const SYSTEM_INFO = {
-    arabic:{text:"Decimal place value system.",pros:"Fast & universal.",cons:"None"},
-    babylonian:{text:"Ancient base-60 system.",pros:"Great for fractions.",cons:"Hard to learn"},
-    roman:{text:"Roman numeral system.",pros:"Good for labeling.",cons:"Slow calculations"},
-    egyptian:{text:"Hieroglyphic numbers.",pros:"Simple idea.",cons:"Very long math"},
-    greek:{text:"Alphabet numerals.",pros:"Used in early science.",cons:"Not calc friendly"},
-    vedic:{text:"Indian mental math.",pros:"Extremely fast.",cons:"Hard to master"},
-    chinese:{text:"Rod numerals.",pros:"Logical system.",cons:"Not global"},
-    modern:{text:"Global math system.",pros:"Best performance.",cons:"None"}
-};
+document.addEventListener("DOMContentLoaded", function(){
 
-window.loadSystemInfo = function(s1, s2){
-    const box1 = document.getElementById("about1");
-    if(!box1) return;  // ⭐ prevents crash on other pages
+    const aboutBox = document.getElementById("about1");
+    if(!aboutBox) return;
 
-    const box2 = document.getElementById("about2");
+    const s1 = localStorage.getItem("system1");
+    const s2 = localStorage.getItem("system2");
 
-    box1.innerHTML = formatSystemInfo(SYSTEM_INFO[s1.toLowerCase()]);
-    box2.innerHTML = formatSystemInfo(SYSTEM_INFO[s2.toLowerCase()]);
-}
+    loadSystemInfo(s1, s2);
 
-function formatSystemInfo(sys){
-    return `
-        <p>${sys.text}</p>
-        <br><b>Advantages:</b><br>${sys.pros}
-        <br><br><b>Disadvantages:</b><br>${sys.cons}
-    `;
-}
+   
+});

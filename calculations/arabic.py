@@ -1,82 +1,56 @@
-import math
+# Arabic (modern decimal) calculation engine
 
-# ---------- ADDITION ----------
-def add(inputs):
+def addition(inputs):
     a = float(inputs["a"])
     b = float(inputs["b"])
 
-    steps = []
-    steps.append(f"Align numbers vertically: {a} + {b}")
-    steps.append("Add units column")
-    steps.append("Carry if needed")
-    result = a + b
-    steps.append(f"Final result = {result}")
+    steps = [
+        f"Write numbers vertically: {a} + {b}",
+        "Add digits column by column",
+        "Carry if sum >= 10",
+        "Final sum computed"
+    ]
 
-    return result, steps
+    return a + b, steps
 
 
-# ---------- SUBTRACTION ----------
-def sub(inputs):
+def subtraction(inputs):
     a = float(inputs["a"])
     b = float(inputs["b"])
 
-    steps = []
-    steps.append(f"Align numbers vertically: {a} - {b}")
-    steps.append("Borrow if needed")
-    result = a - b
-    steps.append(f"Final result = {result}")
+    steps = [
+        f"Write numbers vertically: {a} - {b}",
+        "Subtract digits column by column",
+        "Borrow if needed",
+        "Final difference computed"
+    ]
 
-    return result, steps
+    return a - b, steps
 
 
-# ---------- MULTIPLICATION ----------
-def mul(inputs):
+def multiplication(inputs):
     a = float(inputs["a"])
     b = float(inputs["b"])
 
-    steps = []
-    steps.append("Using long multiplication")
-    steps.append(f"{a} × {b}")
+    steps = [
+        f"Multiply {a} × {b}",
+        "Multiply digit by digit",
+        "Add intermediate results",
+        "Final product computed"
+    ]
 
-    result = a * b
-    steps.append(f"Final result = {result}")
-
-    return result, steps
+    return a * b, steps
 
 
-# ---------- DIVISION ----------
-def div(inputs):
+def division(inputs):
     a = float(inputs["a"])
     b = float(inputs["b"])
 
-    steps = []
-    steps.append("Using long division")
-    result = a / b
-    steps.append(f"Final result = {result}")
+    steps = [
+        f"Divide {a} ÷ {b}",
+        "Perform long division",
+        "Compute quotient",
+        "Final result computed"
+    ]
 
-    return result, steps
-
-
-# ---------- POWER ----------
-def power(inputs):
-    a = float(inputs["a"])
-    b = float(inputs["b"])
-
-    steps = []
-    steps.append(f"Compute {a}^{b}")
-    result = a ** b
-    steps.append(f"Final result = {result}")
-
-    return result, steps
-
-
-# ---------- SQUARE ROOT ----------
-def sqrt(inputs):
-    a = float(inputs["a"])
-
-    steps = []
-    steps.append("Using standard square root method")
-    result = math.sqrt(a)
-    steps.append(f"Final result = {result}")
-
-    return result, steps
+    return a / b, steps
